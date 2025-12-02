@@ -16,5 +16,4 @@ message BillingRequest{
 message BillingResponse{
   string accountId = 1;
   string status    = 2;
-
 }
