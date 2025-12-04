@@ -13,6 +13,8 @@ services:
       - postgres_data:/var/lib/postgresql
     networks:
       - internal
+    depends_on:
+      - billing-service
 
   patient-service:
     build: ./patient-service
@@ -24,12 +26,24 @@ services:
       SPRING_DATASOURCE_PASSWORD: password
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_SQL_INIT_MODE: always
+      BILLING_SERVICE_ADDRESS: billing-service
+      BILLING_SERVICE_GRPC_PORT: 9001
     ports:
       - "4000:4000"
     networks:
       - internal
     depends_on:
       - patient-service-db
+
+  billing-service:
+    build: ./billing-service
+    image: billing-service:latest
+    container_name: billing-service
+    ports:
+      - "4001:4001"
+      - "9001:9001"
+    networks:
+      - internal
 
 volumes:
   postgres_data:
