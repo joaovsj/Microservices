@@ -33,6 +33,7 @@ services:
     networks:
       - internal
     depends_on:
+      - kafka
       - patient-service-db
 
   billing-service:
@@ -44,6 +45,7 @@ services:
       - "9001:9001"
     networks:
       - internal
+
   kafka:
     image: apache/kafka:3.7.0
     container_name: kafka

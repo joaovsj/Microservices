@@ -26,10 +26,12 @@ public class KafkaProducer {
                 .build();
 
         try{
+            log.warn("sending data");
+
             this.kafkaTemplate.send("patient", event.toByteArray());
 
         } catch (Exception e) {
-            log.error("Error sendint patient creating event: {}", e.getMessage());
+            log.error("Error sending patient creating event: {}", e.getMessage());
         }
     }
 
